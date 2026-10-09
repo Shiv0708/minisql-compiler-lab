@@ -1,0 +1,6 @@
+{
+  "name": "MiniSQL Compiler Lab",
+  "description": "A step-by-step SQL compiler pipeline demonstration featuring lexical analysis, AST parsing, semantic checks, TAC generation, optimization, and execution.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
