@@ -9,7 +9,6 @@ import {
   RotateCcw,
   Sparkles,
   Database,
-  FileCode,
   AlertCircle,
   CheckCircle2,
   HelpCircle,
@@ -36,7 +35,7 @@ import { SemanticView } from './components/SemanticView';
 import { TACView } from './components/TACView';
 import { OptimizerView } from './components/OptimizerView';
 import { ExecutionView } from './components/ExecutionView';
-import { PythonSourceView } from './components/PythonSourceView';
+
 import { DataEditorModal } from './components/DataEditorModal';
 
 type PipelineTab =
@@ -47,8 +46,7 @@ type PipelineTab =
   | 'semantic'
   | 'tac'
   | 'optimizer'
-  | 'output'
-  | 'python';
+  | 'output';
 
 export default function App() {
   const [query, setQuery] = useState<string>('SELECT name, marks FROM students WHERE marks > 40 + 40;');
@@ -185,17 +183,9 @@ export default function App() {
               &gt;_
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-base font-bold text-slate-900 tracking-tight">
-                  MiniSQL Compiler
-                </h1>
-                <span className="text-[11px] font-mono bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200 font-semibold">
-                  Compiler Design Lab Project
-                </span>
-              </div>
-              <p className="text-xs text-slate-500">
-                LALR Grammar • Panic Mode Recovery • TAC • Constant Folding • CSV Engine
-              </p>
+              <h1 className="text-base font-bold text-slate-900 tracking-tight">
+                MiniSQL Compiler
+              </h1>
             </div>
           </div>
 
@@ -208,13 +198,6 @@ export default function App() {
               <span>students.csv ({csvRows.length} rows)</span>
             </button>
 
-            <button
-              onClick={() => setActiveTab('python')}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded bg-slate-900 text-white hover:bg-slate-800 font-medium transition-colors"
-            >
-              <FileCode className="w-3.5 h-3.5" />
-              <span>Python PLY Code & Viva</span>
-            </button>
           </div>
         </div>
       </header>
@@ -393,12 +376,7 @@ export default function App() {
               badge={compilation.executionResult ? `${compilation.executionResult.matchedRows} rows` : '-'}
               onClick={() => setActiveTab('output')}
             />
-            <PipelineTabButton
-              tab="python"
-              active={activeTab === 'python'}
-              label="Python Code & Viva"
-              onClick={() => setActiveTab('python')}
-            />
+
           </div>
 
           {/* Active Tab Panel */}
@@ -451,9 +429,7 @@ export default function App() {
               />
             )}
 
-            {activeTab === 'python' && (
-              <PythonSourceView />
-            )}
+
           </div>
         </div>
       </main>
@@ -467,15 +443,7 @@ export default function App() {
         />
       )}
 
-      {/* College Project Footer */}
-      <footer className="bg-white border-t border-slate-200 py-3 text-center text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>MiniSQL Compiler • Practical Project Demonstration</span>
-          <span className="font-mono text-[11px] text-slate-400">
-            Grammar: SELECT &lt;cols&gt; FROM &lt;table&gt; [WHERE &lt;cond&gt;] [ORDER BY &lt;col&gt; [ASC|DESC]] [LIMIT &lt;n&gt;];
-          </span>
-        </div>
-      </footer>
+
     </div>
   );
 }
@@ -501,24 +469,22 @@ const PipelineTabButton: React.FC<PipelineTabButtonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`px-3.5 py-3 text-xs font-medium whitespace-nowrap border-b-2 flex items-center gap-1.5 transition-colors ${
-        active
+      className={`px-3.5 py-3 text-xs font-medium whitespace-nowrap border-b-2 flex items-center gap-1.5 transition-colors ${active
           ? 'border-slate-900 text-slate-900 font-bold bg-white'
           : 'border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
-      }`}
+        }`}
     >
       <span>{label}</span>
       {badge !== undefined && (
         <span
-          className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
-            badgeAlert
+          className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${badgeAlert
               ? 'bg-red-100 text-red-700 font-bold'
               : badgeHighlight
-              ? 'bg-amber-100 text-amber-800 font-bold'
-              : active
-              ? 'bg-slate-200 text-slate-800'
-              : 'bg-slate-200/70 text-slate-600'
-          }`}
+                ? 'bg-amber-100 text-amber-800 font-bold'
+                : active
+                  ? 'bg-slate-200 text-slate-800'
+                  : 'bg-slate-200/70 text-slate-600'
+            }`}
         >
           {badge}
         </span>
